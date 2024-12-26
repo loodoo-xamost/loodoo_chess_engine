@@ -54,7 +54,7 @@ public class SetupMatrix
             {"x","x","x","x","x","x","x","x"},
             {"x","x","x","x","x","x","x","x"},
             {"x","x","x","x","x","x","x","x"},
-            {"x","x","x","x","x","x","x","x"},
+            {"k","x","x","x","x","x","x","K"},
     };
     public static final String[][] bishopTest = {
             {"x","x","x","x","x","x","x","x"},
@@ -64,7 +64,7 @@ public class SetupMatrix
             {"x","x","x","x","x","x","x","x"},
             {"x","x","x","x","x","x","x","x"},
             {"x","x","x","x","x","x","x","x"},
-            {"x","x","x","x","x","x","x","x"},
+            {"k","x","x","x","x","x","x","K"},
     };
     public static final String[][] queenTest = {
             {"x","x","x","x","x","x","x","x"},
@@ -74,7 +74,7 @@ public class SetupMatrix
             {"x","x","x","x","x","x","x","x"},
             {"x","x","x","x","x","x","x","x"},
             {"x","x","x","x","x","x","x","x"},
-            {"x","x","x","x","x","x","x","x"},
+            {"k","x","x","x","x","x","x","K"},
     };
     public static final String[][] promotionTest = {
             {"x","x","x","x","x","x","x","x"},

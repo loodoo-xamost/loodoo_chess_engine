@@ -26,9 +26,20 @@ public class KnightMoveHandler extends MoveHandler implements PieceMoveHandler {
     public boolean isVerticalKnightMove() {
         return Math.abs(this.instance.position.boardCoords.Y() - this.instance.position.boardPreCoords.Y()) == 2 && Math.abs(this.instance.position.boardCoords.X() - this.instance.position.boardPreCoords.X()) == 1;
     }
+    public boolean isVerticalKnightMove(Vector2D boardCoords, Vector2D boardPreCoords) {
+        return Math.abs(boardCoords.Y() - boardPreCoords.Y()) == 2 && Math.abs(boardCoords.X() - boardPreCoords.X()) == 1;
+    }
+
 
     public boolean isHorizontalKnightMove() {
         return Math.abs(this.instance.position.boardCoords.Y() - this.instance.position.boardPreCoords.Y()) == 1 && Math.abs(this.instance.position.boardCoords.X() - this.instance.position.boardPreCoords.X()) == 2;
     }
+    public boolean isHorizontalKnightMove(Vector2D boardCoords, Vector2D boardPreCoords) {
+        return Math.abs(boardCoords.Y() - boardPreCoords.Y()) == 1 && Math.abs(boardCoords.X() - boardPreCoords.X()) == 2;
+    }
 
+    @Override
+    public boolean canMove(Vector2D boardCoords) {
+        return isHorizontalKnightMove(boardCoords, this.instance.position.boardCoords) || isVerticalKnightMove(boardCoords, this.instance.position.boardCoords);
+    }
 }

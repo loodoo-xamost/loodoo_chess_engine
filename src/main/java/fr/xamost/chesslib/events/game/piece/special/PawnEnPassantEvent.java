@@ -4,6 +4,8 @@ import fr.xamost.chesslib.events.Event;
 import fr.xamost.chesslib.game.GameManager;
 import fr.xamost.chesslib.object.piece.classics.pawn.Pawn;
 
+import static fr.xamost.chesslib.object.piece.handler.MoveHandler.moveAccepted;
+
 public class PawnEnPassantEvent implements Event
 {
     private GameManager instance;
@@ -23,10 +25,7 @@ public class PawnEnPassantEvent implements Event
             if(Math.abs(this.instance.lastMovedPiece.position.boardCoords.X() - this.instance.selectedPiece.position.boardPreCoords.X()) == 1 && this.instance.selectedPiece.position.boardPreCoords.Y() == this.instance.lastMovedPiece.position.boardCoords.Y())
             {
                 this.instance.piecesOnBoard.remove(this.instance.lastMovedPiece);
-                instance.selectedPiece.position.syncBoardCoords();
-                instance.selectedPiece.moveHandler.incrementMove();
-                instance.lastMovedPiece = instance.selectedPiece;
-                instance.changeSide();
+                moveAccepted(instance);
 
             }
         }

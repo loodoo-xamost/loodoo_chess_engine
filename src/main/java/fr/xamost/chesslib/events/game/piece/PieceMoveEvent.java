@@ -9,6 +9,7 @@ import fr.xamost.chesslib.game.GameManager;
 import fr.xamost.chesslib.math.BoardCoordsTuples;
 import fr.xamost.chesslib.math.Vector2D;
 import fr.xamost.chesslib.object.piece.Piece;
+import fr.xamost.chesslib.object.piece.PieceTypes;
 import fr.xamost.chesslib.object.piece.classics.king.King;
 import fr.xamost.chesslib.object.piece.classics.pawn.Pawn;
 
@@ -19,7 +20,9 @@ import static fr.xamost.chesslib.math.Vector2D.multiply;
 import static fr.xamost.chesslib.math.Vector2D.sub;
 import static fr.xamost.chesslib.object.board.utils.BoardGlobals.BOARD_SQUARE_HALF_SIZE;
 import static fr.xamost.chesslib.object.board.utils.BoardGlobals.BOARD_SQUARE_SIZE;
+import static fr.xamost.chesslib.object.piece.handler.IllegalHandler.isIllegal;
 import static fr.xamost.chesslib.object.piece.handler.MoveHandler.isSame;
+import static fr.xamost.chesslib.object.piece.handler.MoveHandler.moveAccepted;
 
 public class PieceMoveEvent implements Event
 {
@@ -52,28 +55,27 @@ public class PieceMoveEvent implements Event
                 }
             }
 
-            if(instance.hittingPiece == null && instance.selectedPiece.moveHandler.isCastlingMove())
+            if(!isIllegal(instance.getCurrentColorKing()))
             {
-                new KingCastlingEvent(instance);
-            }
-            else if(instance.hittingPiece == null && instance.lastMovedPiece != null && instance.lastMovedPiece instanceof Pawn && instance.selectedPiece instanceof Pawn && instance.selectedPiece != instance.lastMovedPiece && this.instance.selectedPiece.captureHandler.isCaptureEnPassant(instance.lastMovedPiece))
-            {
-                new PawnEnPassantEvent(instance);
-            } else if (instance.hittingPiece == null && instance.selectedPiece instanceof Pawn && instance.selectedPiece.moveHandler.isPromotionMove())
-            {
-                new PawnPromotionEvent(instance);
-                return;
+                if(instance.hittingPiece == null && instance.selectedPiece.moveHandler.isCastlingMove())
+                {
+                    new KingCastlingEvent(instance);
+                }
+                else if(instance.hittingPiece == null && instance.lastMovedPiece != null && instance.lastMovedPiece instanceof Pawn && instance.selectedPiece instanceof Pawn && instance.selectedPiece != instance.lastMovedPiece && this.instance.selectedPiece.captureHandler.isCaptureEnPassant(instance.lastMovedPiece))
+                {
+                    new PawnEnPassantEvent(instance);
+                } else if (instance.hittingPiece == null && instance.selectedPiece instanceof Pawn && instance.selectedPiece.moveHandler.isPromotionMove())
+                {
+                    new PawnPromotionEvent(instance);
+                    return;
 
-            } else if(instance.selectedPiece.moveHandler.isValidMove() && instance.hittingPiece == null)
-            {
-                instance.selectedPiece.position.syncBoardCoords();
-                instance.selectedPiece.moveHandler.incrementMove();
-                instance.lastMovedPiece = instance.selectedPiece;
-                instance.changeSide();
-                System.out.println("MOVING");
-            }else if(instance.selectedPiece.captureHandler.isCaptureMove(instance.hittingPiece))
-            {
-                new PieceTakeEvent(instance);
+                } else if(instance.selectedPiece.moveHandler.isValidMove() && instance.hittingPiece == null)
+                {
+                    moveAccepted(instance);
+                }else if(instance.selectedPiece.captureHandler.isCaptureMove(instance.hittingPiece))
+                {
+                    new PieceTakeEvent(instance);
+                }
             }
             instance.selectedPiece.position.revertBoardCoords();
             instance.hittingPiece = null;
@@ -83,6 +85,7 @@ public class PieceMoveEvent implements Event
 
         StatTrace();
     }
+
 
     @Override
     public void StatTrace() {

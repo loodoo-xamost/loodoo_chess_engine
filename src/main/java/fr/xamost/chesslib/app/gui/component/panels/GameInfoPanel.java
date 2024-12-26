@@ -76,10 +76,20 @@ public class GameInfoPanel extends Panel
             this.whiteKnightPromotionButton.setEnabled(false);
             this.whiteRookPromotionButton.setEnabled(false);
 
-            if(this.instance.currentSide == PieceSides.WHITE)
+            if(this.instance.currentSide == PieceSides.WHITE) {
                 DrawText(this.instance.currentSide.name() + " turn !", 725, 100, 40, WHITE);
-            if(this.instance.currentSide == PieceSides.BLACK)
+                if(this.instance.checkingPiece != null  && this.instance.checkingPiece.getPieceColor() == PieceSides.BLACK)
+                {
+                    DrawText( " king is in check !", 715, 135, 25, WHITE);
+                }
+            }
+            if(this.instance.currentSide == PieceSides.BLACK) {
                 DrawText(this.instance.currentSide.name() + " turn !", 725, 550, 40, WHITE);
+                if(this.instance.checkingPiece != null  && this.instance.checkingPiece.getPieceColor() == PieceSides.WHITE)
+                {
+                    DrawText(" King is in check !", 715, 525, 25, WHITE);
+                }
+            }
         }
         if(instance.getGameState() == GameState.PROMOTION)
         {

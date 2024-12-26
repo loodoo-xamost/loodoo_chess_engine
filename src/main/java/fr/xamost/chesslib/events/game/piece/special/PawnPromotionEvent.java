@@ -3,6 +3,7 @@ package fr.xamost.chesslib.events.game.piece.special;
 import fr.xamost.chesslib.events.Event;
 import fr.xamost.chesslib.game.GameManager;
 import fr.xamost.chesslib.game.GameState;
+import fr.xamost.chesslib.object.piece.Piece;
 import fr.xamost.chesslib.object.piece.classics.pawn.Pawn;
 
 public class PawnPromotionEvent implements Event
@@ -27,5 +28,15 @@ public class PawnPromotionEvent implements Event
     public void StatTrace()
     {
         System.out.println("Pawn promotion Event");
+    }
+
+    public static void promotionAccepted(GameManager instance, Piece newPiece)
+    {
+        instance.piecesOnBoard.remove(instance.selectedPiece);
+        instance.piecesOnBoardBeforeUpdate = instance.piecesOnBoard;
+        instance.selectedPiece = null;
+        instance.piecesOnBoard.add(newPiece);
+        instance.changeSide();
+        instance.setGameState(GameState.PLAYING);
     }
 }

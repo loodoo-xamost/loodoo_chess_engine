@@ -3,6 +3,8 @@ package fr.xamost.chesslib.events.game.piece;
 import fr.xamost.chesslib.events.Event;
 import fr.xamost.chesslib.game.GameManager;
 
+import static fr.xamost.chesslib.object.piece.handler.MoveHandler.moveAccepted;
+
 public class PieceTakeEvent implements Event
 {
     private GameManager instance;
@@ -18,10 +20,7 @@ public class PieceTakeEvent implements Event
         if( instance.hittingPiece.getPieceColor() != instance.selectedPiece.getPieceColor())
         {
             this.instance.piecesOnBoard.remove(this.instance.hittingPiece);
-            instance.selectedPiece.position.syncBoardCoords();
-            instance.selectedPiece.moveHandler.incrementMove();
-            instance.lastMovedPiece = instance.selectedPiece;
-            instance.changeSide();
+            moveAccepted(instance);
         }
 
         StatTrace();

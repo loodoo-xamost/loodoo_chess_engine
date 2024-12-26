@@ -1,5 +1,6 @@
 package fr.xamost.chesslib.object.piece.classics.bishop;
 
+import fr.xamost.chesslib.math.Vector2D;
 import fr.xamost.chesslib.object.piece.handler.MoveHandler;
 import fr.xamost.chesslib.object.piece.handler.PieceMoveHandler;
 
@@ -15,5 +16,10 @@ public class BishopMoveHandler extends MoveHandler implements PieceMoveHandler {
     public boolean isPieceMove()
     {
         return isTargetPositionOnDiagonalLine() && isTargetOnBoard();
+    }
+
+    @Override
+    public boolean canMove(Vector2D boardCoords) {
+        return isTargetPositionOnDiagonalLine(this.instance.position.boardCoords, boardCoords) && !diagonalChecks(this.instance.position.boardCoords, boardCoords, this.instance.gameInstance.piecesOnBoard, this.instance);
     }
 }

@@ -1,5 +1,6 @@
 package fr.xamost.chesslib.object.piece.classics.king;
 
+import fr.xamost.chesslib.math.Vector2D;
 import fr.xamost.chesslib.object.piece.Piece;
 import fr.xamost.chesslib.object.piece.classics.knight.CastlingType;
 import fr.xamost.chesslib.object.piece.classics.rook.Rook;
@@ -22,11 +23,20 @@ public class KingMoveHandler extends MoveHandler implements PieceMoveHandler
 
     public boolean isHorizontalMove()
     {
-        return Math.abs(this.instance.position.boardCoords.X() - this.instance.position.boardPreCoords.X()) == 1;
+        return isHorizontalMove(this.instance.position.boardCoords, this.instance.position.boardPreCoords);
     }
+    public boolean isHorizontalMove(Vector2D boardCoords, Vector2D boardPreCoords)
+    {
+        return Math.abs(boardCoords.X() - boardPreCoords.X()) == 1;
+    }
+
     public boolean isVerticalMove()
     {
-        return Math.abs(this.instance.position.boardCoords.Y() - this.instance.position.boardPreCoords.Y()) == 1;
+        return isVerticalMove(this.instance.position.boardCoords, this.instance.position.boardPreCoords);
+    }
+    public boolean isVerticalMove(Vector2D boardCoords, Vector2D boardPreCoords)
+    {
+        return Math.abs(boardCoords.Y() - boardPreCoords.Y()) == 1;
     }
 
     @Override
@@ -102,5 +112,10 @@ public class KingMoveHandler extends MoveHandler implements PieceMoveHandler
 
         }
         return null;
+    }
+
+    @Override
+    public boolean canMove(Vector2D boardCoords) {
+        return isHorizontalMove(boardCoords, this.instance.position.boardCoords) || isVerticalMove(boardCoords, this.instance.position.boardCoords);
     }
 }

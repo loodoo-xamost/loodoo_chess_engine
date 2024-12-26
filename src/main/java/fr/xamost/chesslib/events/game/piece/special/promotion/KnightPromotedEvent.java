@@ -10,6 +10,7 @@ import fr.xamost.chesslib.object.piece.classics.knight.Knight;
 import fr.xamost.chesslib.object.piece.classics.queen.Queen;
 import fr.xamost.chesslib.object.piece.classics.rook.Rook;
 
+import static fr.xamost.chesslib.events.game.piece.special.PawnPromotionEvent.promotionAccepted;
 import static fr.xamost.chesslib.object.board.utils.BoardGlobals.SQUARE_PRIMARY_COLOR;
 
 public class KnightPromotedEvent implements Event
@@ -26,12 +27,7 @@ public class KnightPromotedEvent implements Event
     {
         SquareObject square = new SquareObject(this.instance.selectedPiece.position.getGraphicPosFromCoords(), SQUARE_PRIMARY_COLOR, new BoardCoordsTuples(BoardCoordsTuples.genColStr(this.instance.selectedPiece.position.boardCoords.X()), this.instance.selectedPiece.position.boardCoords.Y()));
         Knight newKnight = new Knight(App.game.manager, square, this.instance.selectedPiece.getPieceColor());
-        this.instance.piecesOnBoard.remove(this.instance.selectedPiece);
-        this.instance.piecesOnBoardBeforeUpdate = this.instance.piecesOnBoard;
-        this.instance.selectedPiece = null;
-        this.instance.piecesOnBoard.add(newKnight);
-        this.instance.changeSide();
-        this.instance.setGameState(GameState.PLAYING);
+        promotionAccepted(instance, newKnight);
         StatTrace();
     }
 

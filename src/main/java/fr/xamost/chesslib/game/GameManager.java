@@ -5,6 +5,8 @@ import fr.xamost.chesslib.object.board.BoardObject;
 import fr.xamost.chesslib.object.board.setup.BoardSetups;
 import fr.xamost.chesslib.object.piece.Piece;
 import fr.xamost.chesslib.object.piece.PieceSides;
+import fr.xamost.chesslib.object.piece.PieceTypes;
+import fr.xamost.chesslib.object.piece.classics.king.King;
 
 import java.util.ArrayList;
 
@@ -28,6 +30,10 @@ public class GameManager
     public Piece selectedPiece;
     public Piece hittingPiece;
     public Piece lastMovedPiece;
+    public King whiteKing, blackKing;
+    public boolean isWhiteKingInCheck, isBlackKingInCheck;
+    public Piece checkingPiece;
+
     public PieceSides currentSide;
     public GameInputManager inputManager;
     public GameManager()
@@ -45,9 +51,13 @@ public class GameManager
         boardSetups = BoardSetups.CLASSIC_BOARD;
 
         piecesOnBoard = generatePieces(this);
+        initKingsPointer();
         this.selectedPiece = null;
         this.hittingPiece = null;
         this.lastMovedPiece = null;
+        this.checkingPiece = null;
+        this.isWhiteKingInCheck = false;
+        this.isBlackKingInCheck = false;
 
         this.currentSide = PieceSides.WHITE;
         syncPieces();
@@ -79,14 +89,6 @@ public class GameManager
 
     }
 
-    public void gameLoop()
-    {
-        if(gameState == GameState.PLAYING)
-        {
-            logicUpdate();
-            graphicUpdate();
-        }
-    }
 
 
     public GameState getGameState() {
@@ -134,8 +136,50 @@ public class GameManager
     public void changeSide()
     {
         if(this.currentSide == PieceSides.WHITE)
+        {
             this.currentSide = PieceSides.BLACK;
-        else
+        }
+        else {
             this.currentSide = PieceSides.WHITE;
+        }
+    }
+
+    private void initKingsPointer()
+    {
+        for(Piece piece : instance.piecesOnBoard)
+        {
+            if(piece.getPieceType() == PieceTypes.KING)
+            {
+                if(piece.isBlack())
+                    this.blackKing = (King) piece;
+                if(piece.isWhite())
+                    this.whiteKing = (King) piece;
+            }
+        }
+    }
+
+    public King getCurrentColorKing()
+    {
+        if(this.currentSide == PieceSides.WHITE)
+            return this.whiteKing;
+        if(this.currentSide == PieceSides.BLACK)
+            return this.blackKing;
+        return this.whiteKing;
+    }
+    public King getOpositeColorKing()
+    {
+        if(this.currentSide == PieceSides.WHITE)
+            return this.blackKing;
+        if(this.currentSide == PieceSides.BLACK)
+            return this.whiteKing;
+        return this.blackKing;
+    }
+
+    public void setWhiteKingInCheck(boolean whiteKingInCheck) {
+        isWhiteKingInCheck = whiteKingInCheck;
+    }
+
+    public void setBlackKingInCheck(boolean blackKingInCheck) {
+        isBlackKingInCheck = blackKingInCheck;
     }
 }

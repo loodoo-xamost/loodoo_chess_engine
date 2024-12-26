@@ -1,5 +1,6 @@
 package fr.xamost.chesslib.object.piece.classics.pawn;
 
+import fr.xamost.chesslib.math.Vector2D;
 import fr.xamost.chesslib.object.piece.Piece;
 import fr.xamost.chesslib.object.piece.PieceSides;
 import fr.xamost.chesslib.object.piece.handler.CaptureHandler;
@@ -24,6 +25,8 @@ public class PawnCaptureHandler extends CaptureHandler
         }
         return false;
     }
+
+
     public boolean isCaptureMoveBlack()
     {
         if(instance.getPieceColor() == PieceSides.BLACK)
@@ -35,6 +38,8 @@ public class PawnCaptureHandler extends CaptureHandler
         }
         return false;
     }
+
+
     @Override
     public boolean isCaptureEnPassant(Piece lastMovedPiece)
     {

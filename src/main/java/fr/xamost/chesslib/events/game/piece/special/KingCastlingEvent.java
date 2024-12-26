@@ -8,6 +8,7 @@ import fr.xamost.chesslib.object.piece.classics.king.King;
 import fr.xamost.chesslib.object.piece.classics.knight.CastlingType;
 
 import static fr.xamost.chesslib.object.piece.classics.king.KingMoveHandler.getCaslingPiece;
+import static fr.xamost.chesslib.object.piece.handler.MoveHandler.moveAccepted;
 
 public class KingCastlingEvent implements Event
 {
@@ -59,10 +60,7 @@ public class KingCastlingEvent implements Event
             rook.position.updateBoardPos(new Vector2D(rook.position.boardPreCoords.X() - 2, rook.position.boardPreCoords.Y()));
             rook.position.syncBoardCoords();
             rook.moveHandler.incrementMove();
-            instance.selectedPiece.position.syncBoardCoords();
-            instance.selectedPiece.moveHandler.incrementMove();
-            instance.lastMovedPiece = instance.selectedPiece;
-            instance.changeSide();
+            moveAccepted(instance);
         }
     }
 

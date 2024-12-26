@@ -52,9 +52,8 @@ public class PawnMoveHandler extends MoveHandler implements PieceMoveHandler
         return false;
     }
 
-
-
-
-
-
+    @Override
+    public boolean canMove(Vector2D boardCoords) {
+        return this.instance.captureHandler.isPawnCaptureMoveWhite(boardCoords, this.instance.position.boardCoords) || this.instance.captureHandler.isPawnCaptureMoveBlack(boardCoords, this.instance.position.boardCoords);
+    }
 }

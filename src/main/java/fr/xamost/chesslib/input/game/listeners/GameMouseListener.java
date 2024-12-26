@@ -30,7 +30,7 @@ public class GameMouseListener implements Listener
     public void update()
     {
         this.mouse.setMousePos();
-        if(this.mouse.isLeftClickPressed() && this.instance.selectedPiece != null)
+        if(this.mouse.leftClickPressed && this.instance.selectedPiece != null)
         {
             new PieceDraggedEvent(instance);
         }

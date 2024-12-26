@@ -56,4 +56,14 @@ public class Vector2D
     {
         return "(" + x + ", " + y + ")";
     }
+
+    public static Vector2D add(Vector2D a, Vector2D b)
+    {
+        return new Vector2D(a.X() + b.X(), a.Y() + b.Y());
+    }
+
+    public static Vector2D diff(Vector2D a, Vector2D b)
+    {
+        return new Vector2D(a.X() - b.X(), a.Y() - b.Y());
+    }
 }

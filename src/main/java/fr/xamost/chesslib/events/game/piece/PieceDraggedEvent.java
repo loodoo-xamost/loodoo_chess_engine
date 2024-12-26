@@ -7,7 +7,7 @@ import fr.xamost.chesslib.math.Vector2D;
 
 public class PieceDraggedEvent implements Event
 {
-    private GameManager instance;
+    private final GameManager instance;
     public PieceDraggedEvent(GameManager instance)
     {
         this.instance = instance;
@@ -20,7 +20,7 @@ public class PieceDraggedEvent implements Event
     public void Callback()
     {
         instance.selectedPiece.position.updateGraphicPosFromCursor(App.mouse.getMousePos());
-        //StatTrace();
+        StatTrace();
     }
 
     @Override

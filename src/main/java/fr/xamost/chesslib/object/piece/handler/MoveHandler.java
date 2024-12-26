@@ -1,5 +1,7 @@
 package fr.xamost.chesslib.object.piece.handler;
 
+import fr.xamost.chesslib.events.game.piece.check.CheckmateEvent;
+import fr.xamost.chesslib.events.game.piece.check.PatEvent;
 import fr.xamost.chesslib.game.GameManager;
 import fr.xamost.chesslib.math.Vector2D;
 import fr.xamost.chesslib.object.piece.Piece;
@@ -7,6 +9,8 @@ import fr.xamost.chesslib.object.piece.Piece;
 import static fr.xamost.chesslib.math.Coords2D.integerToIndex;
 import static fr.xamost.chesslib.object.board.utils.BoardGlobals.BOARD_SQUARE_HALF_SIZE;
 import static fr.xamost.chesslib.object.board.utils.BoardGlobals.BOARD_SQUARE_SIZE;
+import static fr.xamost.chesslib.object.piece.handler.CheckHandler.isCheckmate;
+import static fr.xamost.chesslib.object.piece.handler.CheckHandler.isOpponentKingInCheck;
 
 public class MoveHandler implements PieceMoveHandler
 {
@@ -33,6 +37,12 @@ public class MoveHandler implements PieceMoveHandler
     {
         return (Math.abs(this.instance.position.boardCoords.X() - this.instance.position.boardPreCoords.X()) == Math.abs(this.instance.position.boardCoords.Y() - this.instance.position.boardPreCoords.Y())) &&
                 this.instance.position.boardPreCoords != this.instance.position.boardCoords;
+    }
+
+    public boolean isTargetPositionOnDiagonalLine(Vector2D position1, Vector2D position2)
+    {
+        return (Math.abs(position1.X() - position2.X()) == Math.abs(position1.Y() - position2.Y())) &&
+                position1 != position2;
     }
 
     public static boolean isSame(Vector2D v1, Vector2D v2)
@@ -176,5 +186,27 @@ public class MoveHandler implements PieceMoveHandler
 
     public boolean isCastlingMove() {
         return false;
+    }
+
+    public boolean canMove(Vector2D boardCoords)
+    {
+        return false;
+    }
+
+    public static void moveAccepted(GameManager instance)
+    {
+        instance.selectedPiece.position.syncBoardCoords();
+        instance.selectedPiece.moveHandler.incrementMove();
+        instance.lastMovedPiece = instance.selectedPiece;
+        if(isOpponentKingInCheck() && isCheckmate())
+        {
+            new CheckmateEvent();
+            //TODO : ENDGAME CHECKS
+        }if(isCheckmate())
+        {
+            new PatEvent();
+        } else {
+            instance.changeSide();
+        }
     }
 }

@@ -8,6 +8,7 @@ import fr.xamost.chesslib.math.BoardCoordsTuples;
 import fr.xamost.chesslib.object.board.square.SquareObject;
 import fr.xamost.chesslib.object.piece.classics.bishop.Bishop;
 
+import static fr.xamost.chesslib.events.game.piece.special.PawnPromotionEvent.promotionAccepted;
 import static fr.xamost.chesslib.object.board.utils.BoardGlobals.SQUARE_PRIMARY_COLOR;
 
 public class BishopPromotedEvent implements Event
@@ -25,12 +26,7 @@ public class BishopPromotedEvent implements Event
     {
         SquareObject square = new SquareObject(this.instance.selectedPiece.position.getGraphicPosFromCoords(), SQUARE_PRIMARY_COLOR, new BoardCoordsTuples(BoardCoordsTuples.genColStr(this.instance.selectedPiece.position.boardCoords.X()), this.instance.selectedPiece.position.boardCoords.Y()));
         Bishop newBishop = new Bishop(App.game.manager, square, this.instance.selectedPiece.getPieceColor());
-        this.instance.piecesOnBoard.remove(this.instance.selectedPiece);
-        this.instance.piecesOnBoardBeforeUpdate = this.instance.piecesOnBoard;
-        this.instance.selectedPiece = null;
-        this.instance.piecesOnBoard.add(newBishop);
-        this.instance.changeSide();
-        this.instance.setGameState(GameState.PLAYING);
+        promotionAccepted(instance, newBishop);
         StatTrace();
 
     }

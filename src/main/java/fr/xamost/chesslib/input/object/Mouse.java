@@ -9,7 +9,7 @@ import static fr.xamost.chesslib.math.Coords2D.integerToIndex;
 public class Mouse
 {
     private Vector2D position;
-    private boolean leftClickPressed, leftClickReleased, rightClickPressed, rightClickReleased;
+    public boolean leftClickPressed, leftClickReleased, rightClickPressed, rightClickReleased;
 
     public Mouse()
     {
