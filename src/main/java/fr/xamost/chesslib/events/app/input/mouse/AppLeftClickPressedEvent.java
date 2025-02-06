@@ -1,12 +1,14 @@
 package fr.xamost.chesslib.events.app.input.mouse;
 
 import fr.xamost.chesslib.app.App;
-import fr.xamost.chesslib.app.gui.component.ClickableComponent;
 import fr.xamost.chesslib.events.Event;
+import fr.xamost.chesslib.frame.game.playing.gui.component.buttons.PromotionButton;
 import fr.xamost.chesslib.game.GameState;
+import fr.xamost.chesslib.gui.component.interactive.ClickableComponent;
 import fr.xamost.chesslib.input.object.Mouse;
 
-import static fr.xamost.chesslib.app.gui.component.panels.GameInfoPanel.clickableComponents;
+import static fr.xamost.chesslib.frame.game.playing.gui.panel.GameInfoPanel.clickableComponents;
+import static fr.xamost.chesslib.frame.game.playing.gui.panel.GameInfoPanel.promotionButtons;
 import static fr.xamost.chesslib.math.HitBox.hitbox;
 
 public class AppLeftClickPressedEvent implements Event
@@ -23,12 +25,12 @@ public class AppLeftClickPressedEvent implements Event
     {
         if(App.game.manager.getGameState() == GameState.PROMOTION)
         {
-            for(ClickableComponent component : clickableComponents)
+            for(PromotionButton component : promotionButtons)
             {
-                if(hitbox(mouse.getMousePos(), component.getPosition(), component.getSize()) && component.isEnabled())
+                if(hitbox(mouse.getMousePos(), component.getGraphicPosition(), component.getSize()) && component.isClickable())
                 {
-                    System.out.println("Component CallBack " + component.getPosition() + " " + component.getSize());
-                    component.callback();
+                    System.out.println("Component CallBack " + component.getSize() + " " + component.getSize());
+                    component.onClick();
                     return;
                 }
             }

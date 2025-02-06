@@ -92,4 +92,13 @@ public class PositionHandler
         this.GraphicPosition = getGraphicPosFromCoords();
         this.instance.pieceSprite.updatePos(this.GraphicPosition);
     }
+
+    public boolean isOnLastRank()
+    {
+        if(this.instance.isBlack())
+            return (this.boardCoords.Y() == 7);
+        if (this.instance.isWhite())
+            return (this.boardCoords.Y() == 0);
+        return false;
+    }
 }

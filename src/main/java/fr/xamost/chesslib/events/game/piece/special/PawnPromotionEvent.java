@@ -1,14 +1,19 @@
 package fr.xamost.chesslib.events.game.piece.special;
 
 import fr.xamost.chesslib.events.Event;
+import fr.xamost.chesslib.events.game.piece.check.CheckmateEvent;
+import fr.xamost.chesslib.events.game.piece.check.PatEvent;
 import fr.xamost.chesslib.game.GameManager;
 import fr.xamost.chesslib.game.GameState;
 import fr.xamost.chesslib.object.piece.Piece;
 import fr.xamost.chesslib.object.piece.classics.pawn.Pawn;
 
+import static fr.xamost.chesslib.object.piece.handler.CheckHandler.isCheckmate;
+import static fr.xamost.chesslib.object.piece.handler.CheckHandler.isOpponentKingInCheck;
+
 public class PawnPromotionEvent implements Event
 {
-    private GameManager instance;
+    private final GameManager instance;
     public PawnPromotionEvent(GameManager instance)
     {
         this.instance = instance;
@@ -38,5 +43,6 @@ public class PawnPromotionEvent implements Event
         instance.piecesOnBoard.add(newPiece);
         instance.changeSide();
         instance.setGameState(GameState.PLAYING);
+
     }
 }

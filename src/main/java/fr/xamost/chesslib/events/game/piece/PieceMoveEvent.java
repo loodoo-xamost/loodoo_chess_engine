@@ -69,12 +69,26 @@ public class PieceMoveEvent implements Event
                     new PawnPromotionEvent(instance);
                     return;
 
-                } else if(instance.selectedPiece.moveHandler.isValidMove() && instance.hittingPiece == null)
-                {
-                    moveAccepted(instance);
-                }else if(instance.selectedPiece.captureHandler.isCaptureMove(instance.hittingPiece))
+                }else if(instance.selectedPiece.captureHandler.isCaptureMove(instance.hittingPiece) && this.instance.selectedPiece instanceof Pawn && this.instance.selectedPiece.position.isOnLastRank())
                 {
                     new PieceTakeEvent(instance);
+                    new PawnPromotionEvent(instance);
+                    return;
+                }
+                else if(instance.selectedPiece.moveHandler.isValidMove() && instance.hittingPiece == null)
+                {
+                    moveAccepted(instance);
+                }
+                else if(instance.selectedPiece.captureHandler.isCaptureMove(instance.hittingPiece))
+                {
+                    if(this.instance.selectedPiece instanceof Pawn && this.instance.selectedPiece.position.isOnLastRank())
+                    {
+                        new PieceTakeEvent(instance);
+                        new PawnPromotionEvent(instance);
+                        return;
+                    }
+                    new PieceTakeEvent(instance);
+                    moveAccepted(instance);
                 }
             }
             instance.selectedPiece.position.revertBoardCoords();

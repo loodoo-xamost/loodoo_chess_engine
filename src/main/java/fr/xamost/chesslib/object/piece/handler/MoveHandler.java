@@ -200,7 +200,7 @@ public class MoveHandler implements PieceMoveHandler
         instance.lastMovedPiece = instance.selectedPiece;
         if(isOpponentKingInCheck() && isCheckmate())
         {
-            new CheckmateEvent();
+            new CheckmateEvent(instance);
             //TODO : ENDGAME CHECKS
         }if(isCheckmate())
         {

@@ -9,7 +9,7 @@ public class PawnMoveHandler extends MoveHandler implements PieceMoveHandler
 {
     @Override
     public boolean isPromotionMove() {
-        return isStraightMove() && (isPromotionMoveWhite() || isPromotionMoveBlack());
+        return (isStraightMove() && (isPromotionMoveWhite() || isPromotionMoveBlack()));
     }
     public boolean isPromotionMoveWhite()
     {

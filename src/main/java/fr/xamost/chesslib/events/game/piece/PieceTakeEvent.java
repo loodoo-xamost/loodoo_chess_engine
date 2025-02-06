@@ -1,13 +1,15 @@
 package fr.xamost.chesslib.events.game.piece;
 
 import fr.xamost.chesslib.events.Event;
+import fr.xamost.chesslib.events.game.piece.special.PawnPromotionEvent;
 import fr.xamost.chesslib.game.GameManager;
+import fr.xamost.chesslib.object.piece.classics.pawn.Pawn;
 
 import static fr.xamost.chesslib.object.piece.handler.MoveHandler.moveAccepted;
 
 public class PieceTakeEvent implements Event
 {
-    private GameManager instance;
+    private final GameManager instance;
     public PieceTakeEvent(GameManager instance)
     {
         this.instance = instance;
@@ -20,7 +22,6 @@ public class PieceTakeEvent implements Event
         if( instance.hittingPiece.getPieceColor() != instance.selectedPiece.getPieceColor())
         {
             this.instance.piecesOnBoard.remove(this.instance.hittingPiece);
-            moveAccepted(instance);
         }
 
         StatTrace();
